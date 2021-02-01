@@ -1,8 +1,8 @@
-username: admin
-password: admin
+# username: admin
+# password: admin
 
-this project is created in php framework codeigniter...
-by faizullah firozi wardak 0780002528
+# this project is created in php framework codeigniter...
+# by faizullah firozi wardak 0780002528
 
 
 

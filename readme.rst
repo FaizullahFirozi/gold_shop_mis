@@ -1,1 +1,1 @@
-![gold_shop_screen_shot](https://user-images.githubusercontent.com/50979169/106515581-853b0400-64f3-11eb-8e57-66531e832cbc.jpg)
+![gold shop mis](https://user-images.githubusercontent.com/50979169/106516571-ddbed100-64f4-11eb-98e2-3d2038f0267e.jpg)

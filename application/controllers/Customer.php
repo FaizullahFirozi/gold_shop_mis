@@ -21,7 +21,7 @@ class Customer extends MY_Controller
 	  //  Customer show list	
 	public function list_customer()
     {
-		$this->header($title= "Customer");
+		$this->header($title= "Customer Page");
 		$data['customer'] = $this->Main_model->select_record('customer', 'customer_id');
         $this->load->view('customer/customer_list', $data);
 	}
@@ -29,7 +29,7 @@ class Customer extends MY_Controller
 	  //  Customer add form	
 	public function add_customer()
     {
-		$this->header($title= "add_Customer");
+		$this->header($title= "Add Customer");
         $this->load->view('customer/customer_add');
         $this->footer();
 	}
@@ -46,6 +46,9 @@ class Customer extends MY_Controller
 
 		if ($this->form_validation->run()== false)
 		{
+			
+			$msg ='لطفً خانه پری کنید';
+			$this->session->set_flashdata('info', $msg);
 			$this->add_customer();
 
 		} else {
@@ -60,12 +63,14 @@ class Customer extends MY_Controller
 			$result = $this->Main_model->add_record('customer', $data);
 
 			if($result){
-				$msg = 'customer added Successfully..!';
-				$this->General_model->set_msg($msg, 1);
+				$msg = 'مشتری اضافه شد';
+				$this->session->set_flashdata('success', $msg);
+				// $this->General_model->set_msg($msg, 1);
 				redirect(base_url() . 'Customer/list_customer'); 
 			} else {
 
-				$msg ='Sales Not Added..!';
+				$msg ='مشتری اضافه نشد دوباره کوشش کنید';
+				$this->session->set_flashdata('error', $msg);
 				$this->General_model->set_msg($msg, 2);
 				$this->add_customer();
 			}
@@ -78,7 +83,7 @@ class Customer extends MY_Controller
 		$id = $this->uri->segment(3);
 
 		 $data['customer'] = $this->General_model->fetch_CoustomQuery('SELECT * FROM customer WHERE customer_id=' . $id);
-		 $this->header();
+		 $this->header($title= "Edit Customer");
 		 $this->load->view('Customer/customer_edit', $data);
 		 $this->footer();
 	 }
@@ -101,12 +106,14 @@ class Customer extends MY_Controller
 			$result = $this->Main_model->update_record('customer', $data, $where);
 
 			if($result){
-				$msg = 'customer Edit Successfully..!';
+				$msg = 'معلومات مشتری تغیر یافت';
+				$this->session->set_flashdata('info', $msg);
 				$this->General_model->set_msg($msg, 1);
 				redirect(base_url() . 'Customer/list_customer'); 
 			} else {
 
-				$msg ='Sales Not Edit..!';
+				$msg ='معلومات مشتری تغیر نشد دوباره کوشش کنید';
+				$this->session->set_flashdata('error', $msg);
 				$this->General_model->set_msg($msg, 2);
 
 				$this->list_customer();
@@ -121,7 +128,8 @@ class Customer extends MY_Controller
 		  $id = $this->uri->segment(3);
 		  $result = $this->Main_model->delete_record('customer', 'customer_id', $id);
 		  $msg = 'Successfully deleted ';
-		  $this->General_model->set_msg($msg, 1);
+		  $this->session->set_flashdata('warning', $msg);
+		//   $this->General_model->set_msg($msg, 1);
 		  redirect(base_url() . 'index.php/Customer/list_customer');
 	  }
 	  

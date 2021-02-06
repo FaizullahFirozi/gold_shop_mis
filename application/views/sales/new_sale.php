@@ -77,7 +77,7 @@
 								</div>
 								<div class="form-group row">
 									<div class="col-sm-10">
-										<input type="number" name="gold_weight" id="gold_weight" dir="rtl" class=" form-control form-control-lg" autocomplete="off" placeholder="وزن">
+										<input type="text" name="gold_weight" id="gold_weight" dir="rtl" class=" form-control form-control-lg" autocomplete="off" placeholder="وزن">
 										<?= form_error('gold_weight','<i style="color:red;">','</i>'); ?>
 									</div>
 									<label for="inputEmail3" class="col-sm-2 col-form-label">Gold Weight</label>

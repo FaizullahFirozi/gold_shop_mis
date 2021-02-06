@@ -15,7 +15,10 @@
   <!-- icheck bootstrap -->
   <link rel="stylesheet" href="<?= base_url(); ?>assets/plugins/icheck-bootstrap/icheck-bootstrap.min.css">
   <!-- Theme style -->
-  <link rel="stylesheet" href="<?= base_url(); ?>assets/dist/css/adminlte.min.css">
+	<link rel="stylesheet" href="<?= base_url(); ?>assets/dist/css/adminlte.min.css">
+  <!-- Toastr -->
+  <link rel="stylesheet" href="<?= base_url(); ?>assets/plugins/toastr/toastr.min.css">
+	
   <!-- Google Font: Source Sans Pro -->
   <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
 </head>
@@ -93,6 +96,40 @@
 <!-- AdminLTE App -->
 <script src="<?= base_url(); ?>assets/dist/js/adminlte.min.js"></script>
 <script src="<?= base_url(); ?>assets/firozi.js"></script>
+
+<!-- Toastr -->
+<script src="<?= base_url(); ?>assets/plugins/toastr/toastr.min.js"></script>
+
+<!-- codes or for toaster by firozi -->
+<script>	 
+			$(function() {		
+					toastr.options = {
+					"closeButton": true,
+					"debug": false,
+					"positionClass": "toast-top-left",
+					"onclick": null,
+					"showDuration": "1000",
+					"hideDuration": "1000",
+					"timeOut": "5000",
+					"extendedTimeOut": "1000",
+					"showEasing": "swing",
+					"hideEasing": "linear",
+					"showMethod": "fadeIn",
+					"hideMethod": "fadeOut"
+			}
+				<?php if ($this->session->flashdata("success")) : ?>
+					toastr.success( " " , "<?= $this->session->flashdata("success") ?>");
+				<?php elseif ($this->session->flashdata("error")) : ?>
+					toastr.error( " " , "<?= $this->session->flashdata("error") ?>");
+				<?php elseif ($this->session->flashdata("info")) : ?>
+					toastr.info( " " , "<?= $this->session->flashdata("info") ?>");
+				<?php elseif ($this->session->flashdata("warning")) : ?>
+					toastr.warning( " " , "<?= $this->session->flashdata("warning") ?>");
+				<?php endif; ?>
+			});
+
+</script>
+
 
 </body>
 </html>

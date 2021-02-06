@@ -106,6 +106,10 @@
 <script src="<?= base_url(); ?>assets/plugins/datatables-responsive/js/responsive.bootstrap4.min.js"></script>
 <!-- AdminLTE App -->
 <script src="<?= base_url(); ?>assets/dist/js/adminlte.min.js"></script>
+
+<!-- Toastr -->
+<script src="<?= base_url(); ?>assets/plugins/toastr/toastr.min.js"></script>
+
 <!-- AdminLTE for demo purposes -->
 <script src="<?= base_url(); ?>assets/dist/js/demo.js"></script>
 <!-- page script -->
@@ -140,5 +144,38 @@ $(document).ready(function(){
 	});
 });
 </script>
+
+
+<!-- codes or for toaster by firozi -->
+<script>	 
+			$(function() {		
+					toastr.options = {
+					"closeButton": true,
+					"debug": false,
+					"positionClass": "toast-top-right",
+					"onclick": null,
+					"showDuration": "1000",
+					"hideDuration": "1000",
+					"timeOut": "5000",
+					"extendedTimeOut": "1000",
+					"showEasing": "swing",
+					"hideEasing": "linear",
+					"showMethod": "fadeIn",
+					"hideMethod": "fadeOut"
+			}
+				<?php if ($this->session->flashdata("success")) : ?>
+					toastr.success( " " , "<?= $this->session->flashdata("success") ?>");
+				<?php elseif ($this->session->flashdata("error")) : ?>
+					toastr.error( " " , "<?= $this->session->flashdata("error") ?>");
+				<?php elseif ($this->session->flashdata("info")) : ?>
+					toastr.info( " " , "<?= $this->session->flashdata("info") ?>");
+				<?php elseif ($this->session->flashdata("warning")) : ?>
+					toastr.warning( " " , "<?= $this->session->flashdata("warning") ?>");
+				<?php endif; ?>
+			});
+
+</script>
+
+
 </body>
 </html>

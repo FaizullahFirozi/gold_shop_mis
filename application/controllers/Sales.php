@@ -56,7 +56,7 @@ class Sales extends MY_Controller
 	
 	public function list_sale()
     {
-		$this->header($title = 'New Sales');
+		$this->header($title = 'New Sales Page');
 		$data['sales'] = $this->Main_model->fetch_coustom_query('select * from sales INNER JOIN gold_sample ON gold_sample.sample_id = sales.sample_id INNER JOIN customer ON customer.customer_id = sales.customer_id ORDER BY sale_id DESC');
         $this->load->view('sales/sale_history', $data);
 	}
@@ -78,6 +78,9 @@ class Sales extends MY_Controller
 
 		if ($this->form_validation->run()== false)
 		{
+			
+			$msg ='سلام ګرانه ټولی خانی ډکی کړه';
+			$this->session->set_flashdata('info', $msg);
 			$this->new_sale();
 
 		} else {
@@ -98,13 +101,15 @@ class Sales extends MY_Controller
 			$result = $this->Main_model->add_record('sales', $data);
 
 			if($result){
-				$msg = 'Sales added Successfully..!';
-				$this->General_model->set_msg($msg, 1);
+				$msg = 'بل مشتری اضافه شد';
+				$this->session->set_flashdata('success', $msg);
+				// $this->General_model->set_msg($msg, 1);
 				redirect(base_url() . 'Sales/list_sale'); 
 			} else {
 
 				$msg ='Sales Not Added..!';
-				$this->General_model->set_msg($msg, 2);
+				$this->session->set_flashdata('error', $msg);
+				// $this->General_model->set_msg($msg, 2);
 				$this->new_sale();
 			}
 		 }
@@ -152,12 +157,14 @@ class Sales extends MY_Controller
 
 			if($result){
 				$msg = 'Sale Edit Successfully..!';
-				$this->General_model->set_msg($msg, 1);
+				$this->session->set_flashdata('info', $msg);
+				// $this->General_model->set_msg($msg, 1);
 				$this->list_sale();
 				// redirect(base_url() . 'Sales/list_sale'); 
 			} else {
 
 				$msg ='Sales Not Edit..!';
+				$this->session->set_flashdata('error', $msg);
 				$this->General_model->set_msg($msg, 2);
 
 				$this->list_sale();
@@ -170,7 +177,8 @@ class Sales extends MY_Controller
 		$id = $this->uri->segment(3);
 		$result = $this->Main_model->delete_record('sales', 'sale_id', $id);
 		$msg = 'Successfully deleted ';
-		$this->General_model->set_msg($msg, 1);
+		$this->session->set_flashdata('warning', $msg);
+		// $this->General_model->set_msg($msg, 1);
         redirect(base_url() . 'index.php/Sales/list_sale');
 	}
 

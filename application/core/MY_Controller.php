@@ -24,9 +24,9 @@ class MY_Controller extends CI_Controller
     }
 
     //Header for Applications...................................
-    public function header($title = '' )
+    public function header($title = 'Gold Shop System' )
     {
-        $data['title'] = "Shop System";
+        $data['title'] = $title;
         $data['My_Controller'] = $this;
         $this->load->view('layout/header', $data);
     }

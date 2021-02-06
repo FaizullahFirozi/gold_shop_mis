@@ -27,7 +27,7 @@ class Gold_sample extends MY_Controller
 	
 	public function list_gold_sample()
     {
-		$this->header($title = 'Gold sample');
+		$this->header($title = 'Gold sample Page');
 		$data['gold_sample'] = $this->Main_model->select_record('gold_sample', 'sample_id');
         $this->load->view('gold_sample/sample_list', $data);
 		
@@ -37,7 +37,7 @@ class Gold_sample extends MY_Controller
 	  //  Customer add form	
 	  public function add_gold_sample()
 	  {
-		  $this->header($title= "gold_sample");
+		  $this->header($title= "Add Gold sample");
 		  $this->load->view('gold_sample/sample_add');
 		  $this->footer();
 	  }
@@ -56,6 +56,9 @@ class Gold_sample extends MY_Controller
 
 		if ($this->form_validation->run()== false)
 		{
+			
+			$msg ='سلام ګرانه د سمپل نوم ورکړه';
+			$this->session->set_flashdata('info', $msg);
 			$this->add_gold_sample();
 
 		} else {
@@ -67,12 +70,14 @@ class Gold_sample extends MY_Controller
 
 			if($result){
 				$msg = 'Gold Sample added Successfully..!';
-				$this->General_model->set_msg($msg, 1);
+			$this->session->set_flashdata('success', $msg);
+			$this->General_model->set_msg($msg, 1);
 				redirect(base_url() . 'Gold_sample/list_gold_sample'); 
 			} else {
 
 				$msg ='Gold Sample Not Added..!';
-				$this->General_model->set_msg($msg, 2);
+			$this->session->set_flashdata('error', $msg);
+			$this->General_model->set_msg($msg, 2);
 				$this->add_gold_sample();
 			}
 		 }
@@ -86,7 +91,7 @@ class Gold_sample extends MY_Controller
 		$id = $this->uri->segment(3);
 
 		 $data['gold_sample'] = $this->General_model->fetch_CoustomQuery('SELECT * FROM gold_sample WHERE sample_id=' . $id);
-		 $this->header();
+		 $this->header($title= "Edit Gold sample");
 		 $this->load->view('gold_sample/sample_edit', $data);
 		 $this->footer();
 	 }
@@ -107,11 +112,13 @@ class Gold_sample extends MY_Controller
 
 			if($result){
 				$msg = 'Sample Edit Successfully..!';
+				$this->session->set_flashdata('success', $msg);
 				$this->General_model->set_msg($msg, 1);
 				redirect(base_url() . 'Gold_sample/list_gold_sample'); 
 			} else {
 
 				$msg ='Sales Not Edit..!';
+				$this->session->set_flashdata('error', $msg);
 				$this->General_model->set_msg($msg, 2);
 
 				$this->list_gold_sample();
@@ -128,7 +135,8 @@ class Gold_sample extends MY_Controller
 		$id = $this->uri->segment(3);
 		$result = $this->Main_model->delete_record('gold_sample', 'sample_id', $id);
 		$msg = 'Successfully deleted ';
-		$this->General_model->set_msg($msg, 1);
+				$this->session->set_flashdata('warning', $msg);
+				$this->General_model->set_msg($msg, 1);
         redirect(base_url() . 'index.php/Gold_sample/list_gold_sample');
 	}
 

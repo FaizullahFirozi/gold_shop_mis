@@ -26,7 +26,7 @@ class Dashboard extends MY_Controller
     public function index()
     {
 
-        $this->header($title= "dashboard");
+        $this->header($title= "Dashboard Page");
         $this->main_content();
         $this->load->view('dashboard');
         $this->footer();

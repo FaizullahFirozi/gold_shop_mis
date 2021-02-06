@@ -27,7 +27,9 @@ class Users extends MY_Controller {
 
 		if ($this->form_validation->run()== false)
 		{
-			$this->index();
+				$msg = "لطفً یوزرنیم و پسورد تان وارد کنید";
+				$this->session->set_flashdata('info', $msg);
+					$this->index();
 
 		} else {
 
@@ -41,14 +43,16 @@ class Users extends MY_Controller {
 				$this->session->set_userdata("full_name", $result['full_name']);
 
 				$msg = " Welcome Dear " . $this->session->userdata('full_name');
-				$this->General_model->set_msg($msg, 1);
+					$this->session->set_flashdata('success', $msg);
+					$this->General_model->set_msg($msg, 1);
 
                 redirect(base_url() . 'index.php/Dashboard');
 
 			
 			} else {
 				$msg = "نام و یا پسورد تان غلط است ";
-				$this->General_model->set_msg($msg, 2);
+					$this->session->set_flashdata('error', $msg);
+					$this->General_model->set_msg($msg, 2);
 				redirect(base_url() . 'Users');
 			}
 		}
@@ -68,7 +72,7 @@ class Users extends MY_Controller {
     // Changing password by user
 	public function change_password()
     {
-        $this->header();
+        $this->header($title= "Ghange Password Page");
         $this->load->view('Users/change_password');
         $this->footer();
 	}
@@ -115,17 +119,20 @@ class Users extends MY_Controller {
 					);
 					$this->General_model->update_record($update, $where, $tbl);
 					$msg = "پسورد تان تغیر شد. لطفً دوباره لاگین شو که مطمئن شوی";
+					$this->session->set_flashdata('success', $msg);
 					$this->General_model->set_msg($msg, 1);
 					redirect(base_url() . "index.php/Users/change_password");
 				} else {
 					$msg = "پسورد قبلی تان در دیتابیس نیست";
+					$this->session->set_flashdata('error', $msg);
 					$this->General_model->set_msg($msg, 2);
 					redirect(base_url() . "index.php/Users/change_password");
 				}
 			} else {
 
 				$msg = "پسورد جدید و پسورد تائید یکسان نیست";
-				$this->General_model->set_msg($msg, 2);
+					$this->session->set_flashdata('warning', $msg);
+					$this->General_model->set_msg($msg, 2);
 				redirect(base_url() . "index.php/Users/change_password");
 			}
 		}
@@ -136,7 +143,7 @@ class Users extends MY_Controller {
     // Changing changeUserName
 	public function changeUserName()
     {
-		$this->header();
+		$this->header($title= "Change User Name");
 		$userid = $this->session->userdata('user_id');
 		$data['users'] = $this->Main_model->fetch_coustom_query('select full_name from users WHERE user_id='. $userid);
         $this->load->view('Users/change_username', $data);
@@ -182,10 +189,12 @@ class Users extends MY_Controller {
 					);
 					$this->General_model->update_record($update, $where, $tbl);
 					$msg = " نام شما تغیر شد دوباره لاگین شود که ببنید";
+					$this->session->set_flashdata('success', $msg);
 					$this->General_model->set_msg($msg, 1);
 					redirect(base_url() . "index.php/Users/changeUserName");
 				} else {
 					$msg = "پسورد تان غلط است";
+					$this->session->set_flashdata('error', $msg);
 					$this->General_model->set_msg($msg, 2);
 					redirect(base_url() . "index.php/Users/changeUserName");
 				}
